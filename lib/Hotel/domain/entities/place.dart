@@ -2,9 +2,10 @@ import 'package:equatable/equatable.dart';
 import 'package:mylasttravelapp/Hotel/domain/entities/recomended_hotel.dart';
 
 class Place extends Equatable {
-  RecommendedHotel recommendedHotel;
+  final RecommendedHotel recommendedHotel;
+  final String backgroundImage;
 
-  Place(this.recommendedHotel);
+  Place(this.recommendedHotel, this.backgroundImage);
   @override
-  List<Object?> get props => [this.recommendedHotel];
+  List<Object?> get props => [this.recommendedHotel, this.backgroundImage];
 }
