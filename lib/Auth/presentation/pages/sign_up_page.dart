@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:mylasttravelapp/Auth/data/datasources/auth_remote_data_source.dart';
 
-import 'package:mylasttravelapp/Auth/presentation/widgets/default_button.dart';
 import 'package:mylasttravelapp/Auth/presentation/widgets/default_sncakBar.dart';
 import 'package:mylasttravelapp/Auth/presentation/widgets/default_text_form_field.dart';
 
 import '../bloc/cubit/auth_cubit.dart';
 
 class SignUp extends StatefulWidget {
-  SignUp({super.key});
+  const SignUp({super.key});
   static String id = "/sign_up";
 
   @override
@@ -29,7 +26,7 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> _formKey = GlobalKey();
+    final GlobalKey<FormState> formKey = GlobalKey();
 
     return Scaffold(
         appBar: AppBar(
@@ -52,9 +49,9 @@ class _SignUpState extends State<SignUp> {
           },
           child: ModalProgressHUD(
               inAsyncCall: isLoading,
-              progressIndicator: CircularProgressIndicator(),
+              progressIndicator: const CircularProgressIndicator(),
               child: Form(
-                  key: _formKey,
+                  key: formKey,
                   child: Column(
                     children: [
                       DefaultTextFomField(
@@ -71,6 +68,7 @@ class _SignUpState extends State<SignUp> {
                               false) {
                             return "not valid email ";
                           }
+                          return null;
                         },
                         obs: false,
                       ),
@@ -91,12 +89,13 @@ class _SignUpState extends State<SignUp> {
                             if (value == null || value.isEmpty) {
                               return "please enter your password";
                             }
+                            return null;
                           },
                           obs: obs2),
                       ElevatedButton(
-                          style: ButtonStyle(enableFeedback: false),
+                          style: const ButtonStyle(enableFeedback: false),
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
+                            if (formKey.currentState!.validate()) {
                               context.read<AuthCubit>().signUp(
                                   emailController.text,
                                   passwordController.text);
