@@ -1,18 +1,24 @@
 import 'package:equatable/equatable.dart';
 
 class OneHotel extends Equatable {
-  final List<String?> activities;
-  final List<String?> images;
-  final String? etoiles;
-  final String information;
+  final List<dynamic> activities;
+  final String etoiles;
+  final List<dynamic> images;
+  final String info;
   final String name;
   final String note;
-  final int prixNuit;
+  final String prix;
 
-  const OneHotel(this.activities, this.images, this.etoiles, this.information,
-      this.name, this.note, this.prixNuit);
+  const OneHotel(
+      {required this.activities,
+      required this.etoiles,
+      required this.images,
+      required this.info,
+      required this.name,
+      required this.note,
+      required this.prix});
 
   @override
   List<Object?> get props =>
-      [activities, images, etoiles, information, name, note, prixNuit];
+      [activities, etoiles, images, info, name, note, prix];
 }
