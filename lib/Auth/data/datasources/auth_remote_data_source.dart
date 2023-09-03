@@ -18,10 +18,10 @@ class ImplAuthRemoteDataSource implements AuthRemoteDataSource {
     try {
       userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      print("succes");
+      // print("succes");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print("failed email");
+        // print("failed email");
         throw EmailException();
       } else if (e.code == 'wrong-password') {
         throw PasswordException();
@@ -38,8 +38,8 @@ class ImplAuthRemoteDataSource implements AuthRemoteDataSource {
         email: email,
         password: password,
       );
-      print("${credential.user!.email}");
-      print("==========================================");
+      // print("${credential.user!.email}");
+      // print("==========================================");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw WeekPasswordException();
@@ -47,7 +47,7 @@ class ImplAuthRemoteDataSource implements AuthRemoteDataSource {
         throw EmailIUseException();
       }
     } catch (e) {
-      print(e);
+      // print(e);
     }
     return Future.value(unit);
   }
