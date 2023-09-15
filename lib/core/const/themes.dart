@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+HexColor backColor = HexColor("018a78");
 final appTheme = ThemeData(
     scaffoldBackgroundColor: HexColor("018a78"),
     elevatedButtonTheme: ElevatedButtonThemeData(
