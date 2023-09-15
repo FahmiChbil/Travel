@@ -6,6 +6,7 @@ class OneHotel extends Equatable {
   final List<dynamic> images;
   final String info;
   final String name;
+  final String placeName;
   final String note;
   final String prix;
 
@@ -15,6 +16,7 @@ class OneHotel extends Equatable {
       required this.images,
       required this.info,
       required this.name,
+      required this.placeName,
       required this.note,
       required this.prix});
 
