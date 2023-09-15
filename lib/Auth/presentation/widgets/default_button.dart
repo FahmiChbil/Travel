@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Default_button extends StatelessWidget {
-  const Default_button({
+class DefaultButton extends StatelessWidget {
+  const DefaultButton({
     super.key,
     this.onPress,
     required this.data,
