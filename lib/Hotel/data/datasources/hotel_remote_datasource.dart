@@ -1,26 +1,48 @@
-import 'package:dartz/dartz.dart';
-import 'package:mylasttravelapp/Hotel/data/models/all_hotels_model.dart';
-import 'package:mylasttravelapp/Hotel/data/models/hotels_Model.dart';
-import 'package:mylasttravelapp/Hotel/data/models/person.dart';
-import 'package:mylasttravelapp/Hotel/domain/entities/hotels.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mylasttravelapp/Hotel/data/models/all_hotels.dart';
+import 'package:mylasttravelapp/Hotel/data/models/all_places.dart';
+import 'package:mylasttravelapp/Hotel/domain/entities/all_hotels.dart';
 
 abstract class HotelRemoteDataSource {
-  Future<List<QueryDocumentSnapshot>> getHotels();
+  Future<AllHotels> getHotels(String docid);
+  Future<AllPlacesModel> getplaces();
 }
 
 class HotelRemoteDataSourceImpl implements HotelRemoteDataSource {
+  Future<List<String>> getdocsId() async {
+    var collection = FirebaseFirestore.instance.collection('hotels2');
+
+    var querySnapshot = await collection.get();
+    var ids = querySnapshot.docs.map((e) => e.id).toList();
+    print(ids);
+    return ids;
+  }
+
   @override
-  Future<List<QueryDocumentSnapshot>> getHotels() async {
+  Future<AllHotels> getHotels(String docId) async {
+    CollectionReference userRef = FirebaseFirestore.instance
+        .collection('hotels2')
+        .doc(docId)
+        .collection('hotels');
+    QuerySnapshot data = await userRef.get();
+    List<QueryDocumentSnapshot> dataList = data.docs;
+    var hotels = AllHotelsModel.fromJson(dataList);
+    print("=================");
+
+    print(hotels.allhotels.first.activities);
+    return hotels;
+  }
+
+  @override
+  Future<AllPlacesModel> getplaces() async {
     CollectionReference userRef =
-        FirebaseFirestore.instance.collection('S6BUWTzLfMUk5M4NOdM8U4iW8G82');
+        FirebaseFirestore.instance.collection('hotels2');
+    QuerySnapshot data = await userRef.get();
+    List<QueryDocumentSnapshot> dataList = data.docs;
+    var places = AllPlacesModel.fromJson(dataList);
+    // print("============");
+    // print(hotels);
 
-    QuerySnapshot querySnapshot = await userRef.get();
-    List<QueryDocumentSnapshot> listdocs = querySnapshot.docs;
-
-    // AllHotelsModels hotels = AllHotelsModels.fromJson(listdocs);
-    print(listdocs.first.data());
-
-    return listdocs;
+    return Future.value(places);
   }
 }
