@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../core/Exceptions/exception.dart';
 import '../../../core/Network/networ_info.dart';
@@ -14,11 +15,12 @@ class AuthrepositoryImpl implements AuthRepositories {
   AuthrepositoryImpl(
       {required this.implAuthRemoteDataSource, required this.networkInfo});
   @override
-  Future<Either<Failure, Unit>> signIn(String email, password) async {
+  Future<Either<Failure, UserCredential>> signIn(String email, password) async {
     if (await networkInfo.isConnected) {
       try {
-        final result = await implAuthRemoteDataSource.signIn(email, password);
-        return right(unit);
+        UserCredential userCredential =
+            await implAuthRemoteDataSource.signIn(email, password);
+        return right(userCredential);
       } on EmailException {
         return left(SignInFailure());
       } on PasswordException {
@@ -31,18 +33,33 @@ class AuthrepositoryImpl implements AuthRepositories {
   }
 
   @override
-  Future<Either<Failure, Unit>> signUp(String password, email) async {
-    // TODO: implement signUp
+  Future<Either<Failure, UserCredential>> signUp(
+      String password, email, userName) async {
     if (await networkInfo.isConnected) {
       try {
-        final result = await implAuthRemoteDataSource.signUp(email, password);
-        return right(unit);
+        UserCredential userCredential =
+            await implAuthRemoteDataSource.signUp(email, password, userName);
+        return right(userCredential);
       } on EmailException {
         return left(SignUpFailure());
       } on WeekPasswordException {
         return left(WeekPasswordFailure());
       } on EmailIUseException {
         return left(EmailUseFailure());
+      }
+    } else {
+      return left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> signOut() async {
+    if (await networkInfo.isConnected) {
+      try {
+        var result = await implAuthRemoteDataSource.signOut();
+        return right(result);
+      } on FirebaseException {
+        return left(ServerFailure());
       }
     } else {
       return left(ServerFailure());
