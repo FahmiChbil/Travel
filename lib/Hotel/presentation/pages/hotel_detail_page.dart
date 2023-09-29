@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:mylasttravelapp/Hotel/domain/entities/oneHotel.dart';
+import 'package:mylasttravelapp/Hotel/domain/entities/one_hotel.dart';
 import 'package:mylasttravelapp/Hotel/presentation/pages/reserve_hotel.dart';
 import 'package:mylasttravelapp/Hotel/presentation/widgets/caroussel.dart';
-import 'package:mylasttravelapp/Hotel/presentation/widgets/data_type-btn.dart';
 
 import '../widgets/hotels_activitie.dart';
 
@@ -64,7 +63,7 @@ class HotelDetailPage extends StatelessWidget {
                               children: [
                                 ...List.generate(
                                     int.parse(oneHotel.etoiles),
-                                    (index) => Icon(
+                                    (index) => const Icon(
                                           Icons.star,
                                           color: Colors.yellow,
                                         ))
@@ -153,15 +152,19 @@ class HotelDetailPage extends StatelessWidget {
                     Container(
                       constraints: BoxConstraints(maxWidth: 200.w),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           ...List.generate(
                               oneHotel.activities.length,
-                              (index) => Chip(
-                                  backgroundColor: Colors.grey.shade200,
-                                  elevation: 2,
-                                  padding: EdgeInsets.all(3),
-                                  label: Text(oneHotel.activities[index])))
+                              (index) => Padding(
+                                    padding: EdgeInsets.only(left: 5.w),
+                                    child: Chip(
+                                        backgroundColor: Colors.grey.shade200,
+                                        elevation: 2,
+                                        padding: EdgeInsets.all(3.sp),
+                                        label:
+                                            Text(oneHotel.activities[index])),
+                                  ))
                         ],
                       ),
                     ),
@@ -209,7 +212,7 @@ class HotelDetailPage extends StatelessWidget {
                 onTap: () {
                   Navigator.pop(context);
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_back,
                   color: Colors.white,
                 ),

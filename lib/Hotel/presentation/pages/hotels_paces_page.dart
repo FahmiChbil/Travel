@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -9,7 +8,7 @@ import 'package:mylasttravelapp/Hotel/presentation/pages/hotel_detail_page.dart'
 class HotelsPlacePage extends StatelessWidget {
   final AllHotels allHotels;
 
-  HotelsPlacePage({required this.allHotels, super.key});
+  const HotelsPlacePage({required this.allHotels, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +27,10 @@ class HotelsPlacePage extends StatelessWidget {
             },
             child: Padding(
               padding: EdgeInsets.only(left: 15.w),
-              child: Icon(Icons.arrow_back),
+              child: const Icon(Icons.arrow_back),
             ),
           ),
-          title: Padding(
-            padding: EdgeInsets.only(),
-            child: Text(allHotels.allhotels.first.placeName),
-          ),
+          title: Text(allHotels.allhotels.first.placeName),
           centerTitle: true,
         ),
         body: Container(
@@ -111,15 +107,21 @@ class HotelsPlacePage extends StatelessWidget {
                           SizedBox(
                             height: 10.h,
                           ),
-                          Text(
-                            allHotels.allhotels[index].name,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                          Container(
+                            constraints: BoxConstraints(maxWidth: 140.w),
+                            child: Text(
+                              allHotels.allhotels[index].name,
+                              maxLines: 1,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                           Row(
                             children: [
                               ...List.generate(
                                   int.parse(allHotels.allhotels[index].etoiles),
-                                  (index) => Icon(
+                                  (index) => const Icon(
                                         Icons.star,
                                         color: Colors.yellow,
                                       ))

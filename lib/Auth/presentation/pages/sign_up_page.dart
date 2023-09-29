@@ -20,6 +20,7 @@ class _SignUpState extends State<SignUp> {
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
+  final userNameController = TextEditingController();
 
   bool obs2 = true;
   bool isLoading = false;
@@ -29,19 +30,20 @@ class _SignUpState extends State<SignUp> {
     final GlobalKey<FormState> formKey = GlobalKey();
 
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: HexColor("018a78"),
           elevation: 0,
         ),
         body: BlocListener<AuthCubit, AuthState>(
           listener: (context, state) {
-            if (state is LoadingAuthState) {
+            if (state is LoadingSignUpState) {
               isLoading = true;
-            } else if (state is SucceesAuthState) {
+            } else if (state is SuccedSignUpState) {
               isLoading = false;
               ScaffoldMessenger.of(context)
                   .showSnackBar(defaultSnack("Register Succees", Colors.black));
-            } else if (state is FailureAuthState) {
+            } else if (state is FailureSignUpState) {
               isLoading = false;
               ScaffoldMessenger.of(context)
                   .showSnackBar(defaultSnack(state.errorMessage, Colors.black));
@@ -92,13 +94,30 @@ class _SignUpState extends State<SignUp> {
                             return null;
                           },
                           obs: obs2),
+                      DefaultTextFomField(
+                        suff: null,
+                        myHint: "Enter your user Name",
+                        myLabel: "User",
+                        emailcontroller: userNameController,
+                        myvalidator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "please enter your username";
+                          }
+                          return null;
+                        },
+                        obs: false,
+                      ),
                       ElevatedButton(
                           style: const ButtonStyle(enableFeedback: false),
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
                               context.read<AuthCubit>().signUp(
                                   emailController.text,
-                                  passwordController.text);
+                                  passwordController.text,
+                                  userNameController.text);
+                              emailController.clear();
+                              passwordController.clear();
+                              userNameController.clear();
                             }
                           },
                           child: const Text("Register"))
