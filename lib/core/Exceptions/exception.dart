@@ -9,3 +9,5 @@ class ServerException implements Exception {}
 class WeekPasswordException implements Exception {}
 
 class EmailIUseException implements Exception {}
+
+class StripException implements Exception {}

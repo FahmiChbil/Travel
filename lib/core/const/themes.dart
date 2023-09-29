@@ -15,3 +15,5 @@ final appTheme = ThemeData(
     ),
     primaryColor: HexColor("018a78"),
     primarySwatch: Colors.blue);
+
+RegExp kimageFormat = RegExp(r'\b\w+\.(jpg|png)\b');

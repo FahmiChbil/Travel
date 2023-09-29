@@ -31,3 +31,10 @@ class EmailUseFailure extends Failure {
   @override
   List<Object?> get props => throw UnimplementedError();
 }
+
+class StripeFailure extends Failure {
+  final String error;
+  StripeFailure({required this.error});
+  @override
+  List<Object?> get props => throw UnimplementedError();
+}
