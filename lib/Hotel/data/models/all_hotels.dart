@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:mylasttravelapp/Hotel/data/models/one_hotel.dart';
 import 'package:mylasttravelapp/Hotel/domain/entities/all_hotels.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

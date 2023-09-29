@@ -1,8 +1,8 @@
-import 'package:mylasttravelapp/Hotel/domain/entities/oneHotel.dart';
+import 'package:mylasttravelapp/Hotel/domain/entities/one_hotel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OneHotelModel extends OneHotel {
-  OneHotelModel(
+  const OneHotelModel(
       {required super.activities,
       required super.etoiles,
       required super.images,
@@ -23,5 +23,18 @@ class OneHotelModel extends OneHotel {
         name: json['name'],
         note: json['note'],
         prix: json['prix']);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "name": name,
+      "activities": activities,
+      "etoiles": etoiles,
+      "images": images,
+      "information": info,
+      "placename": placeName,
+      "note": note,
+      "prix": prix,
+    };
   }
 }
