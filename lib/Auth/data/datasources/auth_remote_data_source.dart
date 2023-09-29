@@ -5,50 +5,67 @@ import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../core/Exceptions/exception.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<Unit> signIn(String email, password);
-  Future<Unit> signUp(String email, password);
+  Future<UserCredential> signIn(String email, password);
+  Future<UserCredential> signUp(String email, password, userName);
 }
 
 class ImplAuthRemoteDataSource implements AuthRemoteDataSource {
   @override
-  Future<Unit> signIn(String email, password) async {
-    UserCredential? userCredential;
+  Future<UserCredential> signIn(String email, password) async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
     try {
-      userCredential = await FirebaseAuth.instance
+      UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+
+      firestore.collection("users").doc(userCredential.user!.uid).set({
+        "uid": userCredential.user!.uid,
+        "email": email,
+      }, SetOptions(merge: true));
+
+      return userCredential;
       // print("succes");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         // print("failed email");
         throw EmailException();
-      } else if (e.code == 'wrong-password') {
+      } else {
         throw PasswordException();
       }
     }
-    return Future.value(unit);
   }
 
   @override
-  Future<Unit> signUp(String email, password) async {
+  Future<UserCredential> signUp(String email, password, userName) async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
     try {
-      final credential =
+      UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      // print("${credential.user!.email}");
-      // print("==========================================");
+
+      firestore.collection("users").doc(userCredential.user!.uid).set({
+        "uid": userCredential.user!.uid,
+        "email": email,
+        "userName": userName
+      });
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw WeekPasswordException();
-      } else if (e.code == 'email-already-in-use') {
+      } else {
         throw EmailIUseException();
       }
-    } catch (e) {
-      // print(e);
     }
+  }
+
+  Future<Unit> signOut() async {
+    await FirebaseAuth.instance.signOut();
     return Future.value(unit);
   }
 }
