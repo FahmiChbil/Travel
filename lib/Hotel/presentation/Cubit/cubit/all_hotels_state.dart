@@ -13,11 +13,11 @@ class LoadingAllHotelsState extends AllHotelsState {}
 
 class SuccesAllHotelsState extends AllHotelsState {
   final AllHotels allHotels;
-  SuccesAllHotelsState({required this.allHotels});
+  const SuccesAllHotelsState({required this.allHotels});
 }
 
 class FailureAllHotelsState extends AllHotelsState {
   final String errorMsg;
 
-  FailureAllHotelsState({required this.errorMsg});
+  const FailureAllHotelsState({required this.errorMsg});
 }

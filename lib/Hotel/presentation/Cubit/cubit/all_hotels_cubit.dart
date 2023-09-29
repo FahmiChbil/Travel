@@ -1,6 +1,6 @@
-import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mylasttravelapp/Hotel/domain/entities/all_hotels.dart';
 import 'package:mylasttravelapp/Hotel/domain/usecases/get_all_hotels_use_case.dart';
 

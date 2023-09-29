@@ -17,4 +17,20 @@ final class FailureAuthState extends AuthState {
   const FailureAuthState({required this.errorMessage});
 }
 
-final class   SucceesAuthState extends AuthState {}
+final class SucceesAuthState extends AuthState {}
+
+final class FailureSignUpState extends AuthState {
+  final String errorMessage;
+
+  const FailureSignUpState({required this.errorMessage});
+}
+
+final class SuccedSignUpState extends AuthState {}
+
+final class LoadingSignUpState extends AuthState {}
+
+final class SignOutSuccees extends AuthState {}
+
+final class SignOutFailed extends AuthState {}
+
+final class AdminSignInSuccess extends AuthState {}

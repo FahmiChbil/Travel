@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mylasttravelapp/Hotel/domain/entities/all_places.dart';
-import 'package:mylasttravelapp/Hotel/domain/usecases/get_all_hotels_use_case.dart';
 import 'package:mylasttravelapp/Hotel/domain/usecases/get_all_places_use_case.dart';
 import 'package:mylasttravelapp/core/errors/failure.dart';
 import 'package:mylasttravelapp/core/string/failures.dart';
